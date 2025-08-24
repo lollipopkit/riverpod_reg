@@ -24,4 +24,3 @@ dev_dependencies:
 # Configuration for riverpod_reg
 riverpod_reg:
   class_name: "AppProviders" # Optional, defaults to "MyProviders"
-  gen_path: "lib/data/providers.dart" # Optional, defaults to "lib/riverpod_reg.dart"

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_reg_example/data/providers.dart';
+import 'package:riverpod_reg_example/riverpod_reg.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -22,14 +22,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends ConsumerWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends ConsumerState<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
     // Example of using the generated providers
-    final appState = ref.providers.watch.appStates;
-    final serverState = ref.providers.watch.server;
+    final appState = providers.watch.appStates;
+    final serverState = providers.watch.server;
     
     return Scaffold(
       appBar: AppBar(

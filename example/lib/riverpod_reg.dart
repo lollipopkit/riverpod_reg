@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/server_provider.dart';
-import '../../providers/app_provider.dart';
+import '../providers/server_provider.dart';
+import '../providers/app_provider.dart';
 
 extension RiverpodNotifiersWidget on WidgetRef {
   AppProviders get providers => AppProviders(this);

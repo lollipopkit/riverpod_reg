@@ -3,12 +3,20 @@
 A code generation library for Riverpod providers. It generates a structured way to access your providers with type safety and convenience.
 
 ```dart
-// Read (one-time access)
-final settingsState = ref.providers.read.settings;
-// Watch (reactive updates)
-final serverState = ref.providers.watch.server;
-// Use notifiers (for state changes)
-final serverNotifier = ref.providers.use.server;
+class MyWidgetState extends ConsumerState<MyWidget> {
+  final settingsNotifier = providers.read.settings; // Use notifiers (for state changes)
+  @override
+  Widget build(BuildContext context) {
+    final serverState = ref.providers.watch.server; // Watch (reactive updates)
+    return InkWell(
+      onTap: () {
+        final serverState = ref.providers.read.server; // Read (one-time access)
+        settingsNotifier.updateCount(serverState.count + 1);
+      },
+      child: Text('Server: ${serverState.url}'),
+    );
+  }
+}
 ```
 
 ## Usage
@@ -20,7 +28,6 @@ In your `pubspec.yaml`, optionally configure the generation:
 ```yaml
 riverpod_reg:
   class_name: "AppProviders"  # Default: "MyProviders"
-  gen_path: "lib/data/providers.dart"  # Default: "lib/riverpod_reg.dart"
 ```
 
 ### 2. Annotate Your Providers
