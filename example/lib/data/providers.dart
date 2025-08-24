@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'providers/server_provider.dart';
-import 'providers/app_provider.dart';
+import '../../providers/server_provider.dart';
+import '../../providers/app_provider.dart';
 
 extension RiverpodNotifiersWidget on WidgetRef {
   AppProviders get providers => AppProviders(this);
@@ -40,7 +40,7 @@ final class ReadAppProviders {
 
   // Specific provider getters
   ServerState get server => ref.read(serverNotifierProvider);
-  AppState get appstates => ref.read(appStatesProvider);
+  AppState get appStates => ref.read(appStatesProvider);
 }
 
 final class WatchAppProviders {
@@ -51,7 +51,7 @@ final class WatchAppProviders {
 
   // Specific provider getters
   ServerState get server => ref.watch(serverNotifierProvider);
-  AppState get appstates => ref.watch(appStatesProvider);
+  AppState get appStates => ref.watch(appStatesProvider);
 }
 
 final class UseNotifierAppProviders {
@@ -63,5 +63,5 @@ final class UseNotifierAppProviders {
 
   // Specific provider notifier getters
   ServerNotifier get server => ref.read(serverNotifierProvider.notifier);
-  AppStates get appstates => ref.read(appStatesProvider.notifier);
+  AppStates get appStates => ref.read(appStatesProvider.notifier);
 }

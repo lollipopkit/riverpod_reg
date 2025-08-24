@@ -18,9 +18,9 @@ final serverNotifier = ref.providers.use.server;
 In your `pubspec.yaml`, optionally configure the generation:
 
 ```yaml
-register_providers:
+riverpod_reg:
   class_name: "AppProviders"  # Default: "MyProviders"
-  gen_path: "lib/data/providers.dart"  # Default: "lib/generated_providers.dart"
+  gen_path: "lib/data/providers.dart"  # Default: "lib/riverpod_reg.dart"
 ```
 
 ### 2. Annotate Your Providers
@@ -28,7 +28,7 @@ register_providers:
 Use `@registerProvider` to mark providers for generation:
 
 ```dart
-import 'package:providers_register/providers_register.dart';
+import 'package:riverpod_reg/riverpod_reg.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'server_provider.g.dart';

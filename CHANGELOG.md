@@ -4,4 +4,4 @@
 
 ### Features
 
-- ✨ Initial release of providers_register
+- ✨ Initial release of riverpod_reg

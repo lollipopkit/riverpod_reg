@@ -1,7 +1,7 @@
-name: providers_register
+name: riverpod_reg
 description: A code generator for Riverpod providers using build_runner
 version: 1.0.0
-homepage: https://github.com/lollipopkit/flutter_server_box
+homepage: https://github.com/lollipopkit/riverpod_reg
 
 environment:
   sdk: '>=3.5.0 <4.0.0'

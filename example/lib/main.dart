@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'generated_providers.dart';
+import 'package:riverpod_reg_example/data/providers.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -28,7 +28,7 @@ class MyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Example of using the generated providers
-    final appState = ref.providers.watch.appstates;
+    final appState = ref.providers.watch.appStates;
     final serverState = ref.providers.watch.server;
     
     return Scaffold(

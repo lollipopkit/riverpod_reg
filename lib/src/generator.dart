@@ -4,7 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:glob/glob.dart';
-import 'package:providers_register/src/annotations.dart';
+import 'package:riverpod_reg/src/annotations.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:yaml/yaml.dart';
 
@@ -26,7 +26,7 @@ class ProvidersFileBuilder extends Builder {
   
   @override
   Map<String, List<String>> get buildExtensions => const {
-    r'$lib$': ['generated_providers.dart'],
+    r'$lib$': ['riverpod_reg.dart', 'data/providers.dart'],
   };
 
   @override
@@ -37,8 +37,9 @@ class ProvidersFileBuilder extends Builder {
     if (providers.isEmpty) return;
     
     final output = _generateProvidersFile(providers, config);
-    // Use the build_extensions defined path, ignore config.genPath for now
-    const outputPath = 'lib/generated_providers.dart';
+    
+    // Use configured path or default
+    final outputPath = config.genPath ?? 'lib/riverpod_reg.dart';
     
     await buildStep.writeAsString(
       AssetId(buildStep.inputId.package, outputPath),
@@ -52,7 +53,7 @@ class ProvidersFileBuilder extends Builder {
       final pubspecContent = await buildStep.readAsString(pubspecId);
       final pubspec = loadYaml(pubspecContent) as Map;
       
-      final config = pubspec['register_providers'] as Map?;
+      final config = pubspec['riverpod_reg'] as Map?;
       return ProvidersConfig(
         className: config?['class_name'] as String? ?? 'MyProviders',
         genPath: config?['gen_path'] as String?,
@@ -71,7 +72,7 @@ class ProvidersFileBuilder extends Builder {
       // Skip generated files
       if (input.path.endsWith('.g.dart') || 
           input.path.endsWith('.freezed.dart') ||
-          input.path.contains('generated_providers.dart')) {
+          input.path.contains('riverpod_reg.dart')) {
         continue;
       }
       
@@ -201,10 +202,11 @@ class ProvidersFileBuilder extends Builder {
   String _generateDisplayName(String providerName) {
     // Convert from camelCase provider name to display name
     // e.g., serverNotifierProvider -> server
-    return providerName
+    final name = providerName
         .replaceAll('Provider', '')
-        .replaceAll('Notifier', '')
-        .toLowerCase();
+        .replaceAll('Notifier', '');
+    // Convert to camelCase
+    return _camelCase(name);
   }
 
   String _generateProvidersFile(List<ProviderInfo> providers, ProvidersConfig config) {
@@ -219,7 +221,8 @@ class ProvidersFileBuilder extends Builder {
     for (final importPath in imports) {
       // Convert absolute path to relative path from lib/
       final relativePath = importPath?.replaceFirst('lib/', '') ?? '';
-      buffer.writeln("import '$relativePath';");
+      final prevDirCount = config.genPath?.split('/').length ?? 1;
+      buffer.writeln("import '${'../' * (prevDirCount - 1)}$relativePath';");
     }
     buffer.writeln();
     
@@ -326,7 +329,7 @@ class ProvidersConfig {
   
   const ProvidersConfig({
     this.className = 'MyProviders',
-    this.genPath,
+    this.genPath = 'lib/riverpod_reg.dart',
   });
 }
 

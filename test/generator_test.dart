@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:providers_register/src/annotations.dart';
+import 'package:riverpod_reg/src/annotations.dart';
 
 void main() {
   group('RegisterProvider', () {
