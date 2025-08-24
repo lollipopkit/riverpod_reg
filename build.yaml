@@ -1,0 +1,26 @@
+targets:
+  $default:
+    builders:
+      providers_register:providers_file_builder:
+        options:
+          exclude:
+            - "**/*.g.dart"
+            - "**/*.freezed.dart"
+
+builders:
+  providers_register_builder:
+    import: "package:providers_register/builder.dart" 
+    builder_factories: ["providersRegisterBuilder"]
+    build_extensions:
+      ".dart": [".providers_register.part"]
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
+  
+  providers_file_builder:
+    import: "package:providers_register/builder.dart"
+    builder_factories: ["providersFileBuilder"]
+    build_extensions:
+      "$lib$": ["generated_providers.dart"]
+    auto_apply: dependents
+    build_to: source
